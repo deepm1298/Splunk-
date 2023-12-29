@@ -1,36 +1,54 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import Button from '@splunk/react-ui/Button';
 
-import { StyledContainer, StyledGreeting } from './Component1Styles';
+const Component1 = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [error, setError] = useState('');
 
-const propTypes = {
-    name: PropTypes.string,
+  const executeSearch = async () => {
+    try {
+      const response = await fetch('http://localhost:5001/execute-search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ searchQuery }),
+      });
+
+      const data = await response.json();
+      if (data.results) {
+        setSearchResults(data.results);
+        setError('');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An error occurred while executing the search.');
+    }
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+      <button onClick={executeSearch}>Execute Search</button>
+
+      {searchResults.length > 0 && (
+        <div>
+          <h3>Search Results:</h3>
+          <ul>
+            {searchResults.map((result, index) => (
+              <li key={index}>{result}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {error && <div>Error: {error}</div>}
+    </div>
+  );
 };
-
-const Component1 = ({ name = 'User' }) => {
-    const [counter, setCounter] = useState(0);
-
-    const message =
-        counter === 0
-            ? 'You should try clicking the button.'
-            : `You've clicked the button ${counter} time${counter > 1 ? 's' : ''}.`;
-
-    return (
-        <StyledContainer>
-            <StyledGreeting data-testid="greeting">Hello, {name}!</StyledGreeting>
-            <div>{message}</div>
-            <Button
-                label="Click here"
-                appearance="primary"
-                onClick={() => {
-                    setCounter(counter + 1);
-                }}
-            />
-        </StyledContainer>
-    );
-};
-
-Component1.propTypes = propTypes;
 
 export default Component1;

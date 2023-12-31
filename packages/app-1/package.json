@@ -15,7 +15,9 @@
     "stylelint": "stylelint \"src/**/*.{js,jsx}\" --config stylelint.config.js"
   },
   "dependencies": {
-    "@splunk/component-2": "^0.0.1"
+    "@splunk/component-2": "^0.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",

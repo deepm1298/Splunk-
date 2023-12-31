@@ -1568,6 +1568,7 @@
   resolved "file:packages/app-1"
   dependencies:
     "@splunk/component-2" "^0.0.1"
+    cors "^2.8.5"
 
 "@splunk/babel-preset@^3.0.0":
   version "3.0.0"

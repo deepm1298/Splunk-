@@ -1,85 +1,75 @@
 import React, { useEffect, useState } from 'react';
 
 const Component2 = () => {
-  const [queryData, setQueryData] = useState(null);
+  const [queryData, setQueryData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(25); // Number of items per page
+  const [recordsPerPage] = useState(30); // Updated to display 30 records per page
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5001/execute-search');
-        const jsonData = await response.json();
+        const response = await fetch('http://localhost:5002/dashboard');
+        const responseData = await response.json();
 
-        // Extracting and parsing the query data
-        const queryDataString = jsonData.data.match(/'query': '(.*)'/);
-        if (queryDataString && queryDataString.length > 1) {
-          const cleanedQueryJSONString = queryDataString[1]
-            .replace(/\\\\/g, '\\')
-            .replace(/"\\\\"/g, '') // Removing escaped double quotes
-            .replace(/\\"/g, ''); // Removing remaining escaped double quotes
-          const parsedQueryArray = JSON.parse(cleanedQueryJSONString);
+        // Extract the JSON string from the response data
+        const jsonString = responseData.data.match(/\[(.*)\]/s)[0];
+        const jsonData = JSON.parse(jsonString);
 
-          // Removing non-alphabetic characters from strings
-          const cleanedQueryData = parsedQueryArray.map((item) =>
-            item.replace(/[^a-zA-Z]/g, '')
-          );
+        // Log the fetched JSON data
+        console.log('Fetched data:', jsonData);
 
-          setQueryData(cleanedQueryData);
-        }
+        setQueryData(jsonData);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching or parsing data:', error);
       }
     };
 
     fetchData();
   }, []);
 
-  // Logic for displaying items based on pagination
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = queryData && queryData.slice(indexOfFirstItem, indexOfLastItem);
+  // Get current records for the current page
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = queryData.slice(indexOfFirstRecord, indexOfLastRecord);
 
-  // Logic for calculating total pages
-  const totalPages = Math.ceil((queryData && queryData.length) / itemsPerPage);
-
-  // Function to handle page change
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div>
-      <h2>Cleaned Query Data</h2>
-      {currentItems && (
-        <div>
-          <ul>
-            {currentItems.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
-
-          {/* Pagination information */}
-          <p>
-            Showing {indexOfFirstItem + 1} -{' '}
-            {indexOfLastItem > queryData.length ? queryData.length : indexOfLastItem} of{' '}
-            {queryData.length} records
-          </p>
-
-          {/* Pagination buttons */}
-          {totalPages > 1 && (
-            <div>
-              <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
-                Previous
-              </button>
-              <span> Page {currentPage} of {totalPages} </span>
-              <button onClick={() => paginate(currentPage + 1)} disabled={indexOfLastItem >= queryData.length}>
-                Next
-              </button>
-            </div>
+    <div className="full-screen-container"> {/* Apply full-screen container */}
+      <h2>Total Records: {queryData.length}</h2>
+      {/* Display fetched data in a table */}
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>ID</th>
+            <th>App</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.isArray(currentRecords) && currentRecords.length > 0 ? (
+            currentRecords.map((item, index) => (
+              <tr key={index}>
+                <td>{item.title}</td>
+                <td>{item.id}</td>
+                <td>{item.app}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3">No data available</td>
+            </tr>
           )}
-        </div>
-      )}
+        </tbody>
+      </table>
+      {/* Pagination */}
+      <div>
+        {Array.from({ length: Math.ceil(queryData.length / recordsPerPage) }, (_, index) => (
+          <button key={index} onClick={() => paginate(index + 1)}>
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

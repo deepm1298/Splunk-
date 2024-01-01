@@ -11,12 +11,7 @@ getUserTheme()
     .then((theme) => {
         layout(
             <StyledContainer>
-                <StyledGreeting>Hey hiiii </StyledGreeting>
-                <div>hey gentlemen you are more then welcome over here</div>
                 <Component1 name="from inside Component1" />
-                <Component2 name="from inside Component1" />
-
-
             </StyledContainer>,
             {
                 theme,

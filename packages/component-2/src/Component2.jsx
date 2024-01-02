@@ -8,7 +8,7 @@ const Component2 = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5002/dashboard');
+        const response = await fetch('http://localhost:5003/dashboard');
         const responseData = await response.json();
 
         // Extract the JSON string from the response data

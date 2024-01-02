@@ -15,7 +15,7 @@ const Component1 = () => {
   const [error, setError] = useState('');
   const [displayedButton, setDisplayedButton] = useState(null); // New state to track the displayed button
 
-  const test3 = async () => {
+  const ListApps = async () => {
     try {
       const response = await fetch('http://localhost:5003/apps', {
         method: 'POST',
@@ -24,7 +24,7 @@ const Component1 = () => {
         },
         body: JSON.stringify({ searchQuery }),
       });
-      await sleep(1000);
+      await sleep(5000);
       const data = await response.json();
       if (data.results) {
         setSearchResults(data.results);
@@ -33,12 +33,12 @@ const Component1 = () => {
     } catch (error) {
       setError('An error occurred while executing the search.');
     }
-    setDisplayedButton('test3'); // Update displayed button after successful fetch
+    setDisplayedButton('ListApps'); // Update displayed button after successful fetch
   };
 
-  const executeSearch = async () => {
+  const ListFields = async () => {
     try {
-      const response = await fetch('http://localhost:5001/execute-search', {
+      const response = await fetch('http://localhost:5003/execute-search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,19 +54,19 @@ const Component1 = () => {
     } catch (error) {
       setError('An error occurred while executing the search.');
     }
-    setDisplayedButton('executeSearch'); // Update displayed button after successful fetch
+    setDisplayedButton('ListFields'); // Update displayed button after successful fetch
   };
 
-  const test1 = async () => {
+  const ListDashboards = async () => {
     try {
-      const response = await fetch('http://localhost:5002/dashboard', {
+      const response = await fetch('http://localhost:5003/dashboard', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ searchQuery }),
       });
-      await sleep(1000);
+      await sleep(7000);
       const data = await response.json();
       if (data.results) {
         setSearchResults(data.results);
@@ -75,10 +75,10 @@ const Component1 = () => {
     } catch (error) {
       setError('An error occurred while executing Test 1.');
     }
-    setDisplayedButton('test1'); // Update displayed button after successful fetch
+    setDisplayedButton('ListDashboards'); // Update displayed button after successful fetch
   };
 
-  const test2 = async () => {
+  const ListSavedSearches = async () => {
     try {
       const response = await fetch('http://localhost:5003/saved-search', {
         method: 'POST',
@@ -87,7 +87,7 @@ const Component1 = () => {
         },
         body: JSON.stringify({ searchQuery }),
       });
-      await sleep(3000);
+      await sleep(5000);
       const data = await response.json();
       if (data.results) {
         setSearchResults(data.results);
@@ -96,22 +96,22 @@ const Component1 = () => {
     } catch (error) {
       setError('An error occurred while executing Test 2.');
     }
-    setDisplayedButton('test2'); // Update displayed button after successful fetch
+    setDisplayedButton('ListSavedSearches'); // Update displayed button after successful fetch
   };
 
   return (
     
     <div>
-      <Button onClick={executeSearch} disabled={displayedButton === 'executeSearch'} label="executeSearch" appearance="secondary" />
-      <Button onClick={test1} disabled={displayedButton === 'test1'} label="Test1" appearance="secondary" />
-      <Button onClick={test2} disabled={displayedButton === 'test2'} label="Test2" appearance="secondary" />
-      <Button onClick={test3} disabled={displayedButton === 'test3'} label="Test3" appearance="secondary" />
+      <Button onClick={ListFields} disabled={displayedButton === 'ListFields'} label="List Fields" appearance="secondary" />
+      <Button onClick={ListDashboards} disabled={displayedButton === 'ListDashboards'} label="List Dashboards" appearance="secondary" />
+      <Button onClick={ListSavedSearches} disabled={displayedButton === 'ListSavedSearches'} label="List SavedSearches" appearance="secondary" />
+      <Button onClick={ListApps} disabled={displayedButton === 'ListApps'} label="List Apps" appearance="secondary" />
 
 
-      {displayedButton === 'executeSearch' && <Component3 />}
-      {displayedButton === 'test1' && <Component2 />}
-      {displayedButton === 'test2' && <Component4 />}
-      {displayedButton === 'test3' && <Component5 />}
+      {displayedButton === 'ListFields' && <Component3 />}
+      {displayedButton === 'ListDashboards' && <Component2 />}
+      {displayedButton === 'ListSavedSearches' && <Component4 />}
+      {displayedButton === 'ListApps' && <Component5 />}
 
       {searchResults.length > 0 && (
         <div>

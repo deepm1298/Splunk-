@@ -1,8 +1,6 @@
 import React from 'react';
-
 import layout from '@splunk/react-page';
 import Component1 from '@splunk/component-1';
-import Component2 from '@splunk/component-2';
 import { getUserTheme } from '@splunk/splunk-utils/themes';
 
 import { StyledContainer, StyledGreeting } from './StartStyles';

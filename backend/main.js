@@ -135,7 +135,34 @@ app.get('/execute-search', (req, res) => {
 });
 
 
+app.post('/overview', (req, res) => {
+  const searchQuery = req.body.searchQuery;
 
+  const pythonProcess = exec(`python overview.py "${searchQuery}"`, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error executing Python script: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      console.error(`Python script error: ${stderr}`);
+      return;
+    }
+    storedData = stdout.trim(); // Save data received from the Python script
+    console.log('Received data from Python:', storedData);
+  });
+
+  pythonProcess.stdin.end();
+
+  res.status(200).json({ query: searchQuery });
+});
+
+app.get('/overview', (req, res) => {
+  if (storedData !== null) {
+    res.status(200).json({ data: storedData });
+  } else {
+    res.status(404).json({ message: 'No data available' });
+  }
+});
 
 
 

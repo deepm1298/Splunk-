@@ -1,6 +1,7 @@
 import React from 'react';
 import layout from '@splunk/react-page';
-import Component1 from '@splunk/component-1';
+import Component6 from '@splunk/component-6';
+import Overview from '@splunk/overview';
 import { getUserTheme } from '@splunk/splunk-utils/themes';
 
 import { StyledContainer, StyledGreeting } from './StartStyles';
@@ -9,7 +10,7 @@ getUserTheme()
     .then((theme) => {
         layout(
             <StyledContainer>
-                <Component1 name="from inside Component1" />
+                <Component6 name="from inside Overview" />
             </StyledContainer>,
             {
                 theme,

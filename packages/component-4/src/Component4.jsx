@@ -42,6 +42,7 @@ const Component4 = () => {
         <thead>
           <tr>
             <th>Title</th>
+            <th>eaiaclapp</th>
             <th>Search</th>
             <th>Disabled</th>
           </tr>
@@ -51,6 +52,7 @@ const Component4 = () => {
             currentRecords.map((item, index) => (
               <tr key={index}>
                 <td>{item.title}</td>
+                <td>{item.eaiaclapp}</td>
                 <td>{item.search}</td>
                 <td>{item.disabled}</td>
               </tr>

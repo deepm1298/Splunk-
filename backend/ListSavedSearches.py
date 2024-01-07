@@ -14,7 +14,7 @@ service = client.connect(
     app='search',
 )
 
-search_string = '| rest /servicesNS/-/-/saved/searches | table title, search, disabled'
+search_string = '| rest /servicesNS/-/-/saved/searches|table title, eai:acl.app,search,disabled'
 payload = {"exec_mode": "normal"}
 
 if service:
@@ -37,12 +37,14 @@ if service:
     for item in text_data:
         # Extract individual fields from the XML response
         title = item.get('field', [{}])[0].get('value', {}).get('text')
-        search= item.get('field', [{}])[1].get('value', {}).get('text')
-        disabled= item.get('field', [{}])[2].get('value', {}).get('text')
+        eaiaclapp = item.get('field', [{}])[1].get('value', {}).get('text')
+        search= item.get('field', [{}])[2].get('value', {}).get('text')
+        disabled= item.get('field', [{}])[3].get('value', {}).get('text')
 
         # Construct dictionary with extracted data
         dashboard_info = {
             'title': title,
+            'eaiaclapp':eaiaclapp,
             'search': search,
             'disabled': disabled
         }

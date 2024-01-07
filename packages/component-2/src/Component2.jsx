@@ -41,9 +41,11 @@ const Component2 = () => {
       <table>
         <thead>
           <tr>
-            <th>Title</th>
-            <th>ID</th>
-            <th>App</th>
+            <th>title</th>
+            <th>owner</th>
+            <th>label</th>
+            <th>eaiappName</th>
+     
           </tr>
         </thead>
         <tbody>
@@ -51,8 +53,10 @@ const Component2 = () => {
             currentRecords.map((item, index) => (
               <tr key={index}>
                 <td>{item.title}</td>
-                <td>{item.id}</td>
-                <td>{item.app}</td>
+                <td>{item.owner}</td>
+                <td>{item.label}</td>
+                <td>{item.eaiappName}</td>
+                
               </tr>
             ))
           ) : (

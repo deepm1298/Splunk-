@@ -14,7 +14,7 @@ service = client.connect(
     app='search',
 )
 
-search_string = '| rest /servicesNS/-/-/data/ui/views splunk_server=local count=0| table title, id, eai:acl.app'
+search_string = '| rest /servicesNS/-/-/data/ui/views |table title,eai:acl.owner,label,eai:appName'
 payload = {"exec_mode": "normal"}
 
 if service:
@@ -37,14 +37,18 @@ if service:
     for item in text_data:
         # Extract individual fields from the XML response
         title = item.get('field', [{}])[0].get('value', {}).get('text')
-        dashboard_id = item.get('field', [{}])[1].get('value', {}).get('text')
-        app = item.get('field', [{}])[2].get('value', {}).get('text')
+        owner = item.get('field', [{}])[1].get('value', {}).get('text')
+        label = item.get('field', [{}])[2].get('value', {}).get('text')
+        eaiappName = item.get('field', [{}])[3].get('value', {}).get('text')
+      
 
         # Construct dictionary with extracted data
         dashboard_info = {
-            'title': title,
-            'id': dashboard_id,
-            'app': app
+            'title':title,
+            'owner': owner,
+            'label': label,
+            'eaiappName':eaiappName,
+    
         }
 
         l1.append(dashboard_info)

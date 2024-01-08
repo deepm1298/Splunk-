@@ -3,6 +3,12 @@ from time import sleep
 import xmltodict
 import requests
 import json
+import redis
+
+r = redis.Redis(
+  host='redis-14951.c267.us-east-1-4.ec2.cloud.redislabs.com',
+  port=14951,
+  password='4VS4Q2lR4frhMRr5rAoHx8QtsmPxAfiw')
 
 # Your Splunk connection settings
 service = client.connect(
@@ -48,23 +54,37 @@ if service:
             'search': search,
             'disabled': disabled
         }
-
+        dashboard_info2 = {
+            'title': title,
+            'eaiaclapp':eaiaclapp,
+            'disabled': disabled,
+            'index':'Saved_searches'
+        }
+  
+       
+        l2=json.dumps(dashboard_info2)
+        r.hset('ListSavedSearches',title,l2)
+        l2=[]
         l1.append(dashboard_info)
 
     # Convert the list of dictionaries to JSON
     json_data = json.dumps(l1)
     print(json_data)
+   
         # POST JSON data to a specific endpoint
     url = 'http://localhost:5003/saved-search'
     headers = {'Content-Type': 'application/json'}
+    
     try:
         response = requests.post(url, headers=headers, data=json_data)
         if response.status_code == 200:
             print("Request successful!")
-            print(response.json())  # If the response is JSON
+            print(response.json())
         else:
             print("Request failed:", response.text)
     except Exception as e:
         print("An exception occurred:", str(e))
+ 
+
 
 

@@ -4,6 +4,12 @@ import xmltodict
 import requests
 import json
 from collections import OrderedDict
+import redis
+
+r = redis.Redis(
+  host='redis-14951.c267.us-east-1-4.ec2.cloud.redislabs.com',
+  port=14951,
+  password='4VS4Q2lR4frhMRr5rAoHx8QtsmPxAfiw')
 
 # Your Splunk connection settings
 service = client.connect(
@@ -57,11 +63,24 @@ if service:
                 'description':j['description']
 
             }
+            dashboard_info2 = {
+                'label': j['label'],
+                'title':j['title'],
+                'version':j['version'],
+                'description':j['description'],
+                'index':'ListApps',
+        }
+            l2=json.dumps(dashboard_info2)
+            r.hset('ListApps',j['title'],l2)
+            l2=[]
+        
         l1.append(dashboard_info)
     json_data = json.dumps(l1)
+    print(json_data)
     url = 'http://localhost:5003/apps'
     headers = {'Content-Type': 'application/json'}
-    print(json_data)
+    
+  
     try:
         response = requests.post(url, headers=headers, data=json_data)
         if response.status_code == 200:
@@ -71,6 +90,7 @@ if service:
             print("Request failed:", response.text)
     except Exception as e:
         print("An exception occurred:", str(e))
+
 
 
 

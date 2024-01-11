@@ -85,6 +85,3 @@ if service:
     except Exception as e:
         print("An exception occurred:", str(e))
  
-
-
-

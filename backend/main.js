@@ -23,7 +23,7 @@ app.post('/saved-search', (req, res) => {
       return;
     }
     storedData = stdout.trim(); // Save data received from the Python script
-    console.log('Received data from Python:', storedData);
+    console.log(storedData);
   });
 
   pythonProcess.stdin.end();
@@ -163,6 +163,54 @@ app.get('/overview', (req, res) => {
     res.status(404).json({ message: 'No data available' });
   }
 });
+
+app.post('/redis-search', (req, res) => {
+  const searchQuery = req.body.searchQuery;
+
+  const pythonProcess = exec(`python test.py "${searchQuery}"`, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error executing Python script: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      console.error(`Python script error: ${stderr}`);
+      return;
+    }
+    storedData = stdout.trim(); // Save data received from the Python script
+    console.log('Received data from Python:', storedData);
+  });
+  pythonProcess.stdin.end();
+
+  res.status(200).json({ message: 'Search query received successfully!', query: searchQuery });
+});
+
+
+app.post('/search', (req, res) => {
+  const searchQuery = req.body.searchQuery;
+
+  // Perform actions based on the received searchQuery
+  if (searchQuery) {
+    // Example: Logging the search query
+    console.log('Received search query:', searchQuery);
+
+    // Example: Perform search operation using the searchQuery
+
+    // Respond with a success message
+    res.status(200).json({ message:"hi",query: searchQuery });
+  } else {
+    // If searchQuery is missing or invalid, respond with an error message
+    res.status(400).json({ message: 'Invalid search query' });
+  }
+});
+app.get('/search', (req, res) => {
+  if (storedData !== null) {
+    res.status(200).json({ data: storedData });
+  } else {
+    res.status(404).json({ message: 'No data available' });
+  }
+});
+
+
 
 
 

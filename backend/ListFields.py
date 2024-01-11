@@ -52,7 +52,7 @@ if service:
     json_data = json.dumps(l1)
     print(json_data)
     payload = {'searchQuery': json_data}
-    url = 'http://localhost:5003/execute-search'  
+    url = 'http://localhost:5002/execute-search'  
     response = requests.post(url, json=payload)
     if response.status_code == 200:
         print("Request successful!")

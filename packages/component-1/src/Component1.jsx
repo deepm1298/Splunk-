@@ -17,7 +17,7 @@ const Component1 = () => {
 
   const ListApps = async () => {
     try {
-      const response = await fetch('http://localhost:5003/apps', {
+      const response = await fetch('http://localhost:5001/apps', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ const Component1 = () => {
 
   const ListFields = async () => {
     try {
-      const response = await fetch('http://localhost:5003/execute-search', {
+      const response = await fetch('http://localhost:5002/execute-search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ const Component1 = () => {
 
   const ListDashboards = async () => {
     try {
-      const response = await fetch('http://localhost:5003/dashboard', {
+      const response = await fetch('http://localhost:5005/dashboard', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ const Component1 = () => {
 
   const ListSavedSearches = async () => {
     try {
-      const response = await fetch('http://localhost:5003/saved-search', {
+      const response = await fetch('http://localhost:5004/saved-search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

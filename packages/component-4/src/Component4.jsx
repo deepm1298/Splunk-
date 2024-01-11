@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react';
 const Component4 = () => {
   const [queryData, setQueryData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage] = useState(30); // Updated to display 30 records per page
+  const [recordsPerPage] = useState(10); // Updated to display 30 records per page
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5003/saved-search');
+        const response = await fetch('http://localhost:5004/saved-search');
         const responseData = await response.json();
 
         // Extract the JSON string from the response data

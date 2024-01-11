@@ -72,7 +72,7 @@ if service:
     print(json_data)
    
         # POST JSON data to a specific endpoint
-    url = 'http://localhost:5003/saved-search'
+    url = 'http://localhost:5004/saved-search'
     headers = {'Content-Type': 'application/json'}
     
     try:

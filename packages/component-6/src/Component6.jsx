@@ -25,7 +25,7 @@ const Component6 = () => {
       setShowOverview(true);
       // Send a POST request to http://localhost:5003/overview
       try {
-        const response = await fetch('http://localhost:5003/overview', {
+        const response = await fetch('http://localhost:5006/overview', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -61,9 +61,9 @@ const Component6 = () => {
   return (
     <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <form style={{ marginBottom: '20px' }}>
-        <Button label="First" appearance="secondary" onClick={() => handleButtonClick('First')} />
-        <Button label="Second" appearance="secondary" onClick={() => handleButtonClick('Second')} />
-        <Button label="Third" appearance="secondary" onClick={() => handleButtonClick('Third')} />
+        <Button label="Overview" appearance="secondary" onClick={() => handleButtonClick('First')} />
+        <Button label="Dashboard" appearance="secondary" onClick={() => handleButtonClick('Second')} />
+        <Button label="Search" appearance="secondary" onClick={() => handleButtonClick('Third')} />
       </form>
       {showComponent1 ? <Component1 /> : null}
       {showSearch ? <Search /> : null}

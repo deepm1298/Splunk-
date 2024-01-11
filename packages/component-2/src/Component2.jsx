@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react';
 const Component2 = () => {
   const [queryData, setQueryData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage] = useState(30); // Updated to display 30 records per page
+  const [recordsPerPage] = useState(10); // Updated to display 30 records per page
 
   useEffect(() => {
+    
     const fetchData = async () => {
+      
       try {
-        const response = await fetch('http://localhost:5003/dashboard');
+        const response = await fetch('http://localhost:5005/dashboard');
         const responseData = await response.json();
 
         // Extract the JSON string from the response data
@@ -27,7 +29,7 @@ const Component2 = () => {
     fetchData();
   }, []);
 
-  // Get current records for the current page
+  // Get current records for the current pawait sleep(5000);ge
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
   const currentRecords = queryData.slice(indexOfFirstRecord, indexOfLastRecord);

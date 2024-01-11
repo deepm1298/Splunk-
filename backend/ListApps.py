@@ -77,7 +77,7 @@ if service:
         l1.append(dashboard_info)
     json_data = json.dumps(l1)
     print(json_data)
-    url = 'http://localhost:5003/apps'
+    url = 'http://localhost:5001/apps'
     headers = {'Content-Type': 'application/json'}
     
   

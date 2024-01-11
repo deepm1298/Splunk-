@@ -8,7 +8,7 @@ const Component3 = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5003/execute-search');
+        const response = await fetch('http://localhost:5002/execute-search');
         const jsonData = await response.json();
 
         // Extracting and parsing the query data

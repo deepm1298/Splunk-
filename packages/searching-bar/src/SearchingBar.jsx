@@ -43,7 +43,7 @@ const SearchingBar = () => {
                     setSearchResult(null);
                     setIsLoading(false);
                 });
-        }, 6000);
+        }, 3000);
     };
 
     return (

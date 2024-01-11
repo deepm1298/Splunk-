@@ -11,7 +11,7 @@ const Overview = () => {
         // Introduce a delay of 6 seconds (6000 milliseconds) before fetching data
         await new Promise(resolve => setTimeout(resolve, 6000));
 
-        const response = await fetch('http://localhost:5003/overview');
+        const response = await fetch('http://localhost:5006/overview');
       
         if (!response.ok) {
           throw new Error('Network response was not ok.');

@@ -11,6 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/saved-search', (req, res) => {
+  
   const searchQuery = req.body.searchQuery;
 
   const pythonProcess = exec(`python ListSavedSearches.py "${searchQuery}"`, (error, stdout, stderr) => {
@@ -32,6 +33,7 @@ app.post('/saved-search', (req, res) => {
 });
 
 app.get('/saved-search', (req, res) => {
+  
   if (storedData !== null) {
     res.status(200).json({ data: storedData });
   } else {
@@ -40,6 +42,7 @@ app.get('/saved-search', (req, res) => {
 });
 
 app.post('/apps', (req, res) => {
+  
   const searchQuery = req.body.searchQuery;
 
   const pythonProcess = exec(`python ListApps.py "${searchQuery}"`, (error, stdout, stderr) => {
@@ -70,6 +73,7 @@ app.get('/apps', (req, res) => {
 
 
 app.post('/dashboard', (req, res) => {
+ 
   const searchQuery = req.body.searchQuery;
 
   // Assuming '2.py' script saves data somewhere accessible by this Node.js server
@@ -102,6 +106,7 @@ app.get('/dashboard', (req, res) => {
   }
 });
 app.post('/execute-search', (req, res) => {
+
   const searchQuery = req.body.searchQuery;
 
   // Assuming '2.py' script saves data somewhere accessible by this Node.js server
@@ -136,6 +141,7 @@ app.get('/execute-search', (req, res) => {
 
 
 app.post('/overview', (req, res) => {
+  storedData = null;
   const searchQuery = req.body.searchQuery;
 
   const pythonProcess = exec(`python overview.py "${searchQuery}"`, (error, stdout, stderr) => {
@@ -186,6 +192,7 @@ app.post('/redis-search', (req, res) => {
 
 
 app.post('/search', (req, res) => {
+ 
   const searchQuery = req.body.searchQuery;
 
   // Perform actions based on the received searchQuery
